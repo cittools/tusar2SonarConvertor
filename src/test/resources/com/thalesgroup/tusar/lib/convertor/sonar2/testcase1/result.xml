@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sonar:sonar xmlns:xs="http://www.w3.org/2001/XMLSchema"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:tests="http://www.thalesgroup.com/sonar/tests/v2"
+             xmlns:measures="http://www.thalesgroup.com/sonar/measures/v2"
+             xmlns:violations="http://www.thalesgroup.com/sonar/violations/v2"
+             xmlns:coverage="http://www.thalesgroup.com/sonar/coverage/v2"
+             xmlns:size="http://www.thalesgroup.com/sonar/size/v1"
+             xmlns:sonar="http://www.thalesgroup.com/sonar/v2"
+             version="2.0">
+   <sonar:measures toolname="sourcemonitor" version="2.6">
+      <measures:size>
+         <size:resource type="PROJECT" value="S:\sites\workspace\projects\gadgetfactory\src\main\java">
+            <size:measure key="lines" value="1586"/>
+            <size:measure key="statements" value="628"/>
+            <size:measure key="comment_lines_density" value="35.9"/>
+            <size:measure key="classes" value="10"/>
+            <size:measure key="functions" value="0.93"/>
+            <size:measure key="function_complexity" value="18"/>
+            <size:measure key="file_complexity" value="1.94"/>
+         </size:resource>
+      </measures:size>
+   </sonar:measures>
+</sonar:sonar>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sonar:sonar xmlns:xs="http://www.w3.org/2001/XMLSchema"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:measures="http://www.thalesgroup.com/sonar/measures/v2"
+             xmlns:duplications="http://www.thalesgroup.com/sonar/duplications/v1"
+             xmlns:sonar="http://www.thalesgroup.com/sonar/v2"
+             version="2.0">
+    <sonar:measures toolname="cpd">
+        <measures:duplications>
+            <duplications:set lines="22" tokens="119">
+                <duplications:resource
+                        path="src/main/java/hudson/plugins/cigame/rules/plugins/checkstyle/DefaultCheckstyleRule.java"
+                        line="43"/>
+                <duplications:resource
+                        path="src/main/java/hudson/plugins/cigame/rules/plugins/warnings/DefaultWarningsRule.java"
+                        line="43"/>
+            </duplications:set>
+            <duplications:set lines="22" tokens="114">
+                <duplications:resource
+                        path="src/main/java/hudson/plugins/cigame/rules/plugins/checkstyle/DefaultCheckstyleRule.java"
+                        line="43"/>
+                <duplications:resource
+                        path="src/main/java/hudson/plugins/cigame/rules/plugins/opentasks/DefaultOpenTasksRule.java"
+                        line="48"/>
+            </duplications:set>
+        </measures:duplications>
+    </sonar:measures>
+</sonar:sonar>

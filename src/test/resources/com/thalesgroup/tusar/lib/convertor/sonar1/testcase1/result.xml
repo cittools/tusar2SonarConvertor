@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sonar:sonar xmlns:tests="http://www.thalesgroup.com/sonar/tests/v1"
+             xmlns:measures="http://www.thalesgroup.com/sonar/measures/v1"
+             xmlns:violations="http://www.thalesgroup.com/sonar/violations/v1"
+             xmlns:coverage="http://www.thalesgroup.com/sonar/coverage/v1"
+             xmlns:sonar="http://www.thalesgroup.com/sonar/v1" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <sonar:measures>
+        <measures:resource type="FILE" value="examples\A_test.pl">
+            <measures:measure key="LINES" value="64"></measures:measure>
+            <measures:measure key="NCLOC" value="47"></measures:measure>
+            <measures:measure key="STATEMENTS" value="44"></measures:measure>
+            <measures:measure key="COMMENT_LINES" value="0"></measures:measure>
+            <measures:measure key="LI" value="6"></measures:measure>
+        </measures:resource>
+        <measures:resource type="FILE" value="examples\code_with_huge_words.c">
+            <measures:measure key="LINES" value="31"></measures:measure>
+            <measures:measure key="NCLOC" value="12"></measures:measure>
+            <measures:measure key="STATEMENTS" value="6"></measures:measure>
+            <measures:measure key="COMMENT_LINES" value="0"></measures:measure>
+            <measures:measure key="LI" value="12"></measures:measure>
+        </measures:resource>
+        <measures:resource type="FILE" value="examples\databasedump.sql">
+            <measures:measure key="LINES" value="658"></measures:measure>
+            <measures:measure key="NCLOC" value="557"></measures:measure>
+            <measures:measure key="STATEMENTS" value="25"></measures:measure>
+            <measures:measure key="COMMENT_LINES" value="0"></measures:measure>
+            <measures:measure key="LI" value="58"></measures:measure>
+        </measures:resource>
+        <measures:resource type="FILE" value="examples\DOMUtils.java">
+            <measures:measure key="LINES" value="294"></measures:measure>
+            <measures:measure key="NCLOC" value="140"></measures:measure>
+            <measures:measure key="STATEMENTS" value="59"></measures:measure>
+            <measures:measure key="COMMENT_LINES" value="1"></measures:measure>
+            <measures:measure key="LI" value="132"></measures:measure>
+        </measures:resource>
+        <measures:resource type="FILE" value="examples\egalis.c">
+            <measures:measure key="LINES" value="980"></measures:measure>
+            <measures:measure key="NCLOC" value="654"></measures:measure>
+            <measures:measure key="STATEMENTS" value="310"></measures:measure>
+            <measures:measure key="COMMENT_LINES" value="50"></measures:measure>
+            <measures:measure key="LI" value="189"></measures:measure>
+        </measures:resource>
+        <measures:resource type="FILE" value="examples\fonction.c">
+            <measures:measure key="LINES" value="476"></measures:measure>
+            <measures:measure key="NCLOC" value="169"></measures:measure>
+            <measures:measure key="STATEMENTS" value="48"></measures:measure>
+            <measures:measure key="COMMENT_LINES" value="16"></measures:measure>
+            <measures:measure key="LI" value="218"></measures:measure>
+        </measures:resource>
+        <measures:resource type="FILE" value="examples\jquery.js">
+            <measures:measure key="LINES" value="6078"></measures:measure>
+            <measures:measure key="NCLOC" value="4355"></measures:measure>
+            <measures:measure key="STATEMENTS" value="1648"></measures:measure>
+            <measures:measure key="COMMENT_LINES" value="14"></measures:measure>
+            <measures:measure key="LI" value="668"></measures:measure>
+        </measures:resource>
+        <measures:resource type="FILE" value="examples\lim.c">
+            <measures:measure key="LINES" value="11"></measures:measure>
+            <measures:measure key="NCLOC" value="10"></measures:measure>
+            <measures:measure key="STATEMENTS" value="6"></measures:measure>
+            <measures:measure key="COMMENT_LINES" value="0"></measures:measure>
+            <measures:measure key="LI" value="0"></measures:measure>
+        </measures:resource>
+        <measures:resource type="FILE" value="examples/egalis.c">
+            <measures:measure key="LINES" value="980"></measures:measure>
+            <measures:measure key="NCLOC" value="654"></measures:measure>
+            <measures:measure key="STATEMENTS" value="310"></measures:measure>
+            <measures:measure key="COMMENT_LINES" value="50"></measures:measure>
+            <measures:measure key="LI" value="189"></measures:measure>
+        </measures:resource>
+        <measures:resource type="FILE" value="examples/DOMUtils.java">
+            <measures:measure key="LINES" value="294"></measures:measure>
+            <measures:measure key="NCLOC" value="140"></measures:measure>
+            <measures:measure key="STATEMENTS" value="59"></measures:measure>
+            <measures:measure key="COMMENT_LINES" value="1"></measures:measure>
+            <measures:measure key="LI" value="132"></measures:measure>
+        </measures:resource>
+        <measures:resource type="FILE" value="examples/fonction.c">
+            <measures:measure key="LINES" value="476"></measures:measure>
+            <measures:measure key="NCLOC" value="168"></measures:measure>
+            <measures:measure key="STATEMENTS" value="48"></measures:measure>
+            <measures:measure key="COMMENT_LINES" value="15"></measures:measure>
+            <measures:measure key="LI" value="219"></measures:measure>
+        </measures:resource>
+        <measures:resource type="FILE" value="examples/lim.c">
+            <measures:measure key="LINES" value="11"></measures:measure>
+            <measures:measure key="NCLOC" value="10"></measures:measure>
+            <measures:measure key="STATEMENTS" value="6"></measures:measure>
+            <measures:measure key="COMMENT_LINES" value="0"></measures:measure>
+            <measures:measure key="LI" value="0"></measures:measure>
+        </measures:resource>
+        <measures:resource type="FILE" value="examples/DOMUtils.java">
+            <measures:measure key="LINES" value="294"></measures:measure>
+            <measures:measure key="NCLOC" value="139"></measures:measure>
+            <measures:measure key="STATEMENTS" value="59"></measures:measure>
+            <measures:measure key="COMMENT_LINES" value="0"></measures:measure>
+            <measures:measure key="LI" value="133"></measures:measure>
+        </measures:resource>
+        <measures:resource type="FILE" value="examples/nest/nest/lim11.c">
+            <measures:measure key="LINES" value="11"></measures:measure>
+            <measures:measure key="NCLOC" value="10"></measures:measure>
+            <measures:measure key="STATEMENTS" value="6"></measures:measure>
+            <measures:measure key="COMMENT_LINES" value="0"></measures:measure>
+            <measures:measure key="LI" value="0"></measures:measure>
+        </measures:resource>
+        <measures:resource type="FILE" value="examples/nest space/a slcnt.c">
+            <measures:measure key="LINES" value="2736"></measures:measure>
+            <measures:measure key="NCLOC" value="1689"></measures:measure>
+            <measures:measure key="STATEMENTS" value="684"></measures:measure>
+            <measures:measure key="COMMENT_LINES" value="278"></measures:measure>
+            <measures:measure key="LI" value="893"></measures:measure>
+        </measures:resource>
+        <measures:resource type="FILE" value="examples/Program.cs">
+            <measures:measure key="LINES" value="257"></measures:measure>
+            <measures:measure key="NCLOC" value="205"></measures:measure>
+            <measures:measure key="STATEMENTS" value="108"></measures:measure>
+            <measures:measure key="COMMENT_LINES" value="0"></measures:measure>
+            <measures:measure key="LI" value="19"></measures:measure>
+        </measures:resource>
+        <measures:resource type="FILE" value="examples/jquery.js">
+            <measures:measure key="LINES" value="6078"></measures:measure>
+            <measures:measure key="NCLOC" value="4354"></measures:measure>
+            <measures:measure key="STATEMENTS" value="1648"></measures:measure>
+            <measures:measure key="COMMENT_LINES" value="12"></measures:measure>
+            <measures:measure key="LI" value="669"></measures:measure>
+        </measures:resource>
+        <measures:resource type="FILE" value="examples/databasedump.sql">
+            <measures:measure key="LINES" value="658"></measures:measure>
+            <measures:measure key="NCLOC" value="557"></measures:measure>
+            <measures:measure key="STATEMENTS" value="25"></measures:measure>
+            <measures:measure key="COMMENT_LINES" value="0"></measures:measure>
+            <measures:measure key="LI" value="58"></measures:measure>
+        </measures:resource>
+        <measures:resource type="FILE" value="examples/query.py">
+            <measures:measure key="LINES" value="1479"></measures:measure>
+            <measures:measure key="NCLOC" value="1157"></measures:measure>
+            <measures:measure key="STATEMENTS" value="1157"></measures:measure>
+            <measures:measure key="COMMENT_LINES" value="0"></measures:measure>
+            <measures:measure key="LI" value="144"></measures:measure>
+        </measures:resource>
+        <measures:resource type="FILE" value="examples\Program.cs">
+            <measures:measure key="LINES" value="257"></measures:measure>
+            <measures:measure key="NCLOC" value="205"></measures:measure>
+            <measures:measure key="STATEMENTS" value="108"></measures:measure>
+            <measures:measure key="COMMENT_LINES" value="0"></measures:measure>
+            <measures:measure key="LI" value="19"></measures:measure>
+        </measures:resource>
+        <measures:resource type="FILE" value="examples\query.py">
+            <measures:measure key="LINES" value="1479"></measures:measure>
+            <measures:measure key="NCLOC" value="1157"></measures:measure>
+            <measures:measure key="STATEMENTS" value="1157"></measures:measure>
+            <measures:measure key="COMMENT_LINES" value="0"></measures:measure>
+            <measures:measure key="LI" value="144"></measures:measure>
+        </measures:resource>
+    </sonar:measures>
+</sonar:sonar>

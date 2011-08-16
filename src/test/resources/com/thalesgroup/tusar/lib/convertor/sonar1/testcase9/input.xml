@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tusar xmlns_xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0">
+   <tests>
+      <testsuite name="aunit" errors="1" failures="1" tests="4">
+         <testcase testname="Test addition" fulltestname="TestClass" time="0"/>
+         <testcase testname="Test subtraction" fulltestname="TestClass" time="0"/>
+         <testcase testname="Test addition (failure expected)" fulltestname="TestClass" time="0">
+            <failure message="Test should fail this assertion, as 5+3 /= 9" type="Assertion">Test should fail this assertion, as 5+3 /= 9</failure>
+            <system-err>&#xD;[File] - math-test.adb&#xD;[Line] - 29&#xD;</system-err>
+         </testcase>
+         <testcase testname="Test addition (error expected)" fulltestname="TestClass" time="0">
+            <error message="CONSTRAINT_ERROR" type="Error">CONSTRAINT_ERROR</error>
+            <system-err>&#xD;[File] - &#xD;[Line] - &#xD;</system-err>
+         </testcase>
+      </testsuite>
+   </tests>
+</tusar>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sonar:sonar xmlns:xs="http://www.w3.org/2001/XMLSchema"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:tests="http://www.thalesgroup.com/sonar/tests/v1"
+             xmlns:measures="http://www.thalesgroup.com/sonar/measures/v1"
+             xmlns:violations="http://www.thalesgroup.com/sonar/violations/v1"
+             xmlns:coverage="http://www.thalesgroup.com/sonar/coverage/v1"
+             xmlns:sonar="http://www.thalesgroup.com/sonar/v1"
+             version="1.0"
+             xmlns_xsi="http://www.w3.org/2001/XMLSchema-instance">
+   <sonar:tests>
+      <tests:testsuite errors="1" failures="1" name="aunit" tests="4">
+         <tests:testcase fulltestname="TestClass" testname="Test addition" time="0"/>
+         <tests:testcase fulltestname="TestClass" testname="Test subtraction" time="0"/>
+         <tests:testcase fulltestname="TestClass" testname="Test addition (failure expected)" time="0">
+            <tests:failure message="Test should fail this assertion, as 5+3 /= 9" type="Assertion">Test should fail this assertion, as 5+3 /= 9</tests:failure>
+            <tests:system-err>&#xD;[File] - math-test.adb&#xD;[Line] - 29&#xD;</tests:system-err>
+         </tests:testcase>
+         <tests:testcase fulltestname="TestClass" testname="Test addition (error expected)" time="0">
+            <tests:error message="CONSTRAINT_ERROR" type="Error">CONSTRAINT_ERROR</tests:error>
+            <tests:system-err>&#xD;[File] - &#xD;[Line] - &#xD;</tests:system-err>
+         </tests:testcase>
+      </tests:testsuite>
+   </sonar:tests>
+</sonar:sonar>
