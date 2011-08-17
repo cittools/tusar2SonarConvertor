@@ -17,4 +17,9 @@ public class TestConversionV2 extends AbstractTest {
     public void testcase2() throws Exception {
         convert2SonarV2("testcase2/input.xml", "testcase2/result.xml");
     }
+
+    @Test
+    public void testcase3() throws Exception {
+        convert2SonarV2("testcase3/input.xml", "testcase3/result.xml");
+    }
 }
