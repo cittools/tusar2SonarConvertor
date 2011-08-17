@@ -9,7 +9,7 @@
                 xmlns:documentation="http://www.thalesgroup.com/sonar/documentation/v1"
                 xmlns:size="http://www.thalesgroup.com/sonar/size/v1"
                 xmlns:sonar="http://www.thalesgroup.com/sonar/v2" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-    <xsl:output method="xml" version="1.0" encoding="UTF-8" indent="yes"/>
+    <xsl:output method="xml" version="1.0" encoding="UTF-8" indent="yes" cdata-section-elements="duplications:codefragment"/>
 
     <xsl:template match="*">
         <xsl:param name="namespace">sonar</xsl:param>
