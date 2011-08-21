@@ -7,7 +7,7 @@
     <artifactId>tusar2SonarConverter</artifactId>
     <packaging>jar</packaging>
     <version>0.2</version>
-    <name>Tusar2SonarConverter</name>
+    <name>tusar2SonarConverter</name>
 
     <dependencies>
         <dependency>
@@ -18,12 +18,12 @@
         <dependency>
             <groupId>com.thalesgroup.dtkit</groupId>
             <artifactId>dtkit-tusar-model</artifactId>
-            <version>0.17-SNAPSHOT</version>
+            <version>0.17</version>
         </dependency>
         <dependency>
-	    <groupId>com.thalesgroup.sonar.lib</groupId>
-	    <artifactId>sonar-model</artifactId>
-	    <version>0.2</version>
+            <groupId>com.thalesgroup.sonar.lib</groupId>
+            <artifactId>sonar-model</artifactId>
+            <version>0.2</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
@@ -56,10 +56,9 @@
         <developer>
             <id>gbois</id>
             <name>Gregory Boissinot</name>
-            <email>gbois@dev.java.net</email>
             <timezone>+1</timezone>
             <roles>
-                <role>Project Owner</role>
+                <role>Project Developer</role>
             </roles>
         </developer>
     </developers>
@@ -85,4 +84,10 @@
             </plugin>
         </plugins>
     </build>
+
+    <scm>
+        <connection>scm:git:git://github.com/cittools/tusar2SonarConvertor.git</connection>
+        <developerConnection>scm:git:git://github.com/cittools/tusar2SonarConvertor.git</developerConnection>
+    </scm>
+
 </project>
