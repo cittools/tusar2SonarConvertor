@@ -32,15 +32,17 @@
 
         <xsl:if test="$eltName='measures'">
             <xsl:element name="sonar:{local-name()}">
-                <xsl:for-each select="@*">
-                    <xsl:attribute name="{name()}">
-                        <xsl:value-of select="."/>
-                    </xsl:attribute>
-                </xsl:for-each>
+                <xsl:element name="measures:size">
+                    <xsl:for-each select="@*">
+                        <xsl:attribute name="{name()}">
+                            <xsl:value-of select="."/>
+                        </xsl:attribute>
+                    </xsl:for-each>
 
-                <xsl:apply-templates select="node()">
-                    <xsl:with-param name="namespace">measures</xsl:with-param>
-                </xsl:apply-templates>
+                    <xsl:apply-templates select="node()">
+                        <xsl:with-param name="namespace">measures</xsl:with-param>
+                    </xsl:apply-templates>
+                </xsl:element>
             </xsl:element>
         </xsl:if>
 
@@ -105,18 +107,16 @@
 
         <!-- Sonar v1 contains only size elements -->
         <xsl:if test="$namespace='measures'">
-                <xsl:element name="measures:size">
-                    <xsl:element name="size:resource">
-                        <xsl:for-each select="@*">
-                            <xsl:attribute name="{name()}">
-                                <xsl:value-of select="."/>
-                            </xsl:attribute>
-                        </xsl:for-each>
-                        <xsl:apply-templates select="node()">
-                            <xsl:with-param name="namespace">size</xsl:with-param>
-                        </xsl:apply-templates>
-                    </xsl:element>
-                </xsl:element>
+            <xsl:element name="size:resource">
+                <xsl:for-each select="@*">
+                    <xsl:attribute name="{name()}">
+                        <xsl:value-of select="."/>
+                    </xsl:attribute>
+                </xsl:for-each>
+                <xsl:apply-templates select="node()">
+                    <xsl:with-param name="namespace">size</xsl:with-param>
+                </xsl:apply-templates>
+            </xsl:element>
         </xsl:if>
 
         <xsl:if test="$namespace='size'">
