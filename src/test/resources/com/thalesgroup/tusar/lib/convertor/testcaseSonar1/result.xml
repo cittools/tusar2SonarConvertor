@@ -1,22 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<sonar:sonar xmlns:xs="http://www.w3.org/2001/XMLSchema"
-             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-             xmlns:measures="http://www.thalesgroup.com/sonar/measures/v2"
+<sonar:sonar xmlns:design="http://www.thalesgroup.com/sonar/design/v1"
+             xmlns:documentation="http://www.thalesgroup.com/sonar/documentation/v1"
              xmlns:size="http://www.thalesgroup.com/sonar/size/v1"
              xmlns:sonar="http://www.thalesgroup.com/sonar/v2"
+             xmlns:xs="http://www.w3.org/2001/XMLSchema"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:tests="http://www.thalesgroup.com/sonar/tests/v2"
+             xmlns:measures="http://www.thalesgroup.com/sonar/measures/v2"
+             xmlns:violations="http://www.thalesgroup.com/sonar/violations/v2"
+             xmlns:duplications="http://www.thalesgroup.com/sonar/duplications/v1"
+             xmlns:coverage="http://www.thalesgroup.com/sonar/coverage/v2"
              version="2.0">
-   <sonar:measures toolname="gnatmetric">
-      <measures:size>
-         <size:resource  type="FILE" value="/tmp/TCjdemo/var/thales-control/hudson/hudsonAllDemo/jobs/ada_sample/workspace/starter/b~demo1.adb">
+    <sonar:measures>
+      <measures:size toolname="gnatmetric">
+        <size:resource type="FILE"
+                        value="/tmp/TCjdemo/var/thales-control/hudson/hudsonAllDemo/jobs/ada_sample/workspace/starter/b~demo1.adb">
             <size:measure key="LINES" value="204"/>
             <size:measure key="NCLOC" value="175"/>
-         </size:resource>
+        </size:resource>
+        <size:resource type="FILE"
+                        value="/tmp/TCjdemo/var/thales-control/hudson/hudsonAllDemo/jobs/ada_sample/workspace/starter/b~demo2.adb">
+            <size:measure key="LINES" value="205"/>
+            <size:measure key="NCLOC" value="176"/>
+        </size:resource>
       </measures:size>
-       <measures:size>
-          <size:resource  type="FILE" value="/tmp/TCjdemo/var/thales-control/hudson/hudsonAllDemo/jobs/ada_sample/workspace/starter/b~demo2.adb">
-             <size:measure key="LINES" value="205"/>
-             <size:measure key="NCLOC" value="176"/>
-          </size:resource>
-       </measures:size>
    </sonar:measures>
 </sonar:sonar>
