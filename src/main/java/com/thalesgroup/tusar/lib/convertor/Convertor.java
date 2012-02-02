@@ -58,9 +58,12 @@ public class Convertor {
                 || isTusarForVersion(inputFile, 1)
                 ) {
             String sonarV1 = convert2SonarV1AndGetContent(inputFile);
-            return convert_sonar_v1_to_sonar_v2(sonarV1);
+            String sonarV2 = convertAndGetOutput(sonarV1, "sonar_v1_to_sonar_v2.xsl");
+            return convert_sonar_v2_to_sonar_v3(sonarV2);
         } else {
-            return convert2SonarV2(inputFile);
+            //return convert2SonarV2(inputFile);
+        	String sonarV2 = convert2SonarV2AndGetContent(inputFile);
+            return convert_sonar_v2_to_sonar_v3(sonarV2);
         }
     }
 
@@ -99,9 +102,20 @@ public class Convertor {
 
         throw new IllegalArgumentException("There is no convert to Soanr v1 for the input file " + inputFile.getAbsolutePath());
     }
+    
+    private String convert2SonarV2AndGetContent(File inputFile) throws IOException {
+    	// Remove Namespace if needed
+        String out = conversionService.convertAndReturn(new StreamSource(this.getClass().getResourceAsStream("remove-namespace.xsl")), inputFile, null);
+        return convertAndGetOutput(out, "tusar-v7-v8-2Sonarv2.xsl");
+    }
 
     public File convert_sonar_v1_to_sonar_v2(String input) throws IOException {
         String xsl = "sonar_v1_to_sonar_v2.xsl";
+        return convertAndGetOutputFile(input, xsl);
+    }
+    
+    public File convert_sonar_v2_to_sonar_v3(String input) throws IOException {
+        String xsl = "sonar_v2_to_sonar_v3.xsl";
         return convertAndGetOutputFile(input, xsl);
     }
 
