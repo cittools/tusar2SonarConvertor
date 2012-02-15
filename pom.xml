@@ -6,7 +6,7 @@
     <groupId>com.thalesgroup.tusar.lib</groupId>
     <artifactId>tusar2SonarConverter</artifactId>
     <packaging>jar</packaging>
-    <version>0.3-SNAPSHOT</version>
+    <version>0.4</version>
     <name>tusar2SonarConverter</name>
 
     <licenses>
@@ -42,12 +42,12 @@
         <dependency>
             <groupId>com.thalesgroup.dtkit</groupId>
             <artifactId>dtkit-tusar-model</artifactId>
-            <version>0.19</version>
+            <version>0.20</version>
         </dependency>
         <dependency>
             <groupId>com.thalesgroup.sonar.lib</groupId>
             <artifactId>sonar-model</artifactId>
-            <version>0.3</version>
+            <version>0.4</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>

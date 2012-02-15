@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tusar:tusar xmlns:line-coverage="http://www.thalesgroup.com/tusar/line-coverage/v1"
+             xmlns:xs="http://www.w3.org/2001/XMLSchema"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:tusar="http://www.thalesgroup.com/tusar/v10"
+             xmlns:coverage="http://www.thalesgroup.com/tusar/coverage/v4"
+             version="10.0">            
+   <tusar:coverage>
+      <coverage:line-coverage toolname="cobertura">                        
+         <line-coverage:file path="cli\cppcheckexecutor.cpp">                                    
+            <line-coverage:line hits="2" number="28"/>                                    
+            <line-coverage:line hits="2" number="33"/>                                    
+            <line-coverage:line hits="1" number="35"/>                                    
+            <line-coverage:line hits="1" number="38"/>                                    
+            <line-coverage:line hits="1" number="39"/>                                    
+            <line-coverage:line hits="1" number="40"/>                                    
+            <line-coverage:line hits="1" number="42"/>                                    
+            <line-coverage:line hits="0" number="44"/>                                    
+            <line-coverage:line hits="0" number="46"/>                                    
+            <line-coverage:line hits="0" number="47"/>                                    
+            <line-coverage:line hits="7" number="50"/>                                    
+            <line-coverage:line hits="1" number="51"/>                                    
+            <line-coverage:line hits="0" number="53"/>                                    
+            <line-coverage:line hits="1" number="56"/>                                    
+            <line-coverage:line hits="1" number="57"/>                                    
+            <line-coverage:line hits="1" number="60"/>                                    
+            <line-coverage:line hits="0" number="62"/>                                    
+            <line-coverage:line hits="0" number="64"/>                                    
+            <line-coverage:line hits="0" number="69"/>                                    
+            <line-coverage:line hits="0" number="70"/>                                    
+            <line-coverage:line hits="0" number="71"/>                                    
+            <line-coverage:line hits="0" number="72"/>                                    
+            <line-coverage:line hits="1" number="75"/>                                    
+            <line-coverage:line hits="0" number="77"/>                                    
+            <line-coverage:line hits="1" number="80"/>                                    
+            <line-coverage:line hits="1" number="81"/>                                    
+            <line-coverage:line hits="0" number="83"/>                                    
+            <line-coverage:line hits="2" number="87"/>                                    
+            <line-coverage:line hits="2" number="88"/>                                    
+            <line-coverage:line hits="77" number="92"/>                                    
+            <line-coverage:line hits="77" number="93"/>                                    
+            <line-coverage:line hits="68" number="97"/>                                    
+            <line-coverage:line hits="68" number="98"/>                                    
+            <line-coverage:line hits="68" number="100"/>                                    
+            <line-coverage:line hits="68" number="101"/>                                    
+            <line-coverage:line hits="68" number="105"/>                                    
+            <line-coverage:line hits="2" number="110"/>                                    
+            <line-coverage:line hits="2" number="111"/>                                    
+            <line-coverage:line hits="0" number="113"/>                                    
+            <line-coverage:line hits="2" number="117"/>                                    
+            <line-coverage:line hits="2" number="119"/>                                    
+            <line-coverage:line hits="2" number="120"/>                                    
+            <line-coverage:line hits="2" number="121"/>                        
+         </line-coverage:file>                        
+         <line-coverage:file path="lib\errorlogger.h">                                    
+            <line-coverage:line hits="4" number="92"/>                                    
+            <line-coverage:line hits="4" number="93"/>                        
+         </line-coverage:file>                        
+         <line-coverage:file path="cli\threadexecutor.cpp">                                    
+            <line-coverage:line hits="0" number="224"/>                                    
+            <line-coverage:line hits="0" number="33"/>                                    
+            <line-coverage:line hits="0" number="34"/>                                    
+            <line-coverage:line hits="0" number="228"/>                                    
+            <line-coverage:line hits="0" number="39"/>                                    
+            <line-coverage:line hits="0" number="41"/>                                    
+            <line-coverage:line hits="2" number="235"/>                                    
+            <line-coverage:line hits="2" number="236"/>                                    
+            <line-coverage:line hits="2" number="237"/>                                    
+            <line-coverage:line hits="0" number="233"/>                                    
+            <line-coverage:line hits="0" number="219"/>                                    
+            <line-coverage:line hits="0" number="220"/>                        
+         </line-coverage:file>                        
+         <line-coverage:file path="cli\threadexecutor.h">                                    
+            <line-coverage:line hits="0" number="68"/>                                    
+            <line-coverage:line hits="0" number="69"/>                        
+         </line-coverage:file>            
+      </coverage:line-coverage>
+   </tusar:coverage>
+</tusar:tusar>

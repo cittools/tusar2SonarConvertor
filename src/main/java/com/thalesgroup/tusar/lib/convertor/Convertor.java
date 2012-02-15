@@ -50,7 +50,25 @@ public class Convertor {
 
     public File convert(File inputFile) throws IOException {
 
-        if (isTusarForVersion(inputFile, 6)
+        return convert2SonarV4(inputFile);
+    }
+
+
+    public File convert2SonarV1(File inputFile) throws IOException {
+        File file = File.createTempFile("convertFile", "sonar");
+        FileOutputStream fos = new FileOutputStream(file);
+        fos.write(convert2SonarV1AndGetContent(inputFile).getBytes());
+        return file;
+    }
+    
+    public File convert2SonarV2(File inputFile) throws IOException {
+        // Remove Namespace if needed
+        String out = conversionService.convertAndReturn(new StreamSource(this.getClass().getResourceAsStream("remove-namespace.xsl")), inputFile, null);
+        return convertAndGetOutputFile(out, "tusar-v7-v8-2Sonarv2.xsl");
+    }
+    
+    public File convert2SonarV3(File inputFile) throws IOException {
+    	if (isTusarForVersion(inputFile, 6)
                 || isTusarForVersion(inputFile, 5)
                 || isTusarForVersion(inputFile, 4)
                 || isTusarForVersion(inputFile, 3)
@@ -60,25 +78,27 @@ public class Convertor {
             String sonarV1 = convert2SonarV1AndGetContent(inputFile);
             String sonarV2 = convertAndGetOutput(sonarV1, "sonar_v1_to_sonar_v2.xsl");
             return convert_sonar_v2_to_sonar_v3(sonarV2);
-        } else {
+        } else if (isTusarForVersion(inputFile, 7)
+                || isTusarForVersion(inputFile, 8)
+                || isTusarForVersion(inputFile, 9)
+                ){
             //return convert2SonarV2(inputFile);
         	String sonarV2 = convert2SonarV2AndGetContent(inputFile);
             return convert_sonar_v2_to_sonar_v3(sonarV2);
         }
+    	return null;
     }
-
-
-    public File convert2SonarV2(File inputFile) throws IOException {
-        // Remove Namespace if needed
-        String out = conversionService.convertAndReturn(new StreamSource(this.getClass().getResourceAsStream("remove-namespace.xsl")), inputFile, null);
-        return convertAndGetOutputFile(out, "tusar-v7-v8-2Sonarv2.xsl");
-    }
-
-    public File convert2SonarV1(File inputFile) throws IOException {
-        File file = File.createTempFile("convertFile", "sonar");
-        FileOutputStream fos = new FileOutputStream(file);
-        fos.write(convert2SonarV1AndGetContent(inputFile).getBytes());
-        return file;
+    
+    public File convert2SonarV4(File inputFile) throws IOException {
+    	if (isTusarForVersion(inputFile, 10)){
+    		String out = conversionService.convertAndReturn(new StreamSource(this.getClass().getResourceAsStream("remove-namespace.xsl")), inputFile, null);
+            return convertAndGetOutputFile(out, "tusar-v10-2Sonarv4.xsl");
+    	}
+    	else {
+    		File sonarV3 = convert2SonarV3(inputFile);
+    		String out = conversionService.convertAndReturn(new StreamSource(this.getClass().getResourceAsStream("remove-namespace.xsl")), sonarV3, null);
+    		return convertAndGetOutputFile(out, "sonar_v3_to_sonar_v4.xsl");
+    	}
     }
 
     private String convert2SonarV1AndGetContent(File inputFile) throws IOException {
@@ -100,7 +120,7 @@ public class Convertor {
             return convertAndGetOutput(out, "tusar-v1-v2-v3-2Sonarv1.xsl");
         }
 
-        throw new IllegalArgumentException("There is no convert to Soanr v1 for the input file " + inputFile.getAbsolutePath());
+        throw new IllegalArgumentException("There is no convert to Sonar v1 for the input file " + inputFile.getAbsolutePath());
     }
     
     private String convert2SonarV2AndGetContent(File inputFile) throws IOException {
@@ -116,6 +136,11 @@ public class Convertor {
     
     public File convert_sonar_v2_to_sonar_v3(String input) throws IOException {
         String xsl = "sonar_v2_to_sonar_v3.xsl";
+        return convertAndGetOutputFile(input, xsl);
+    }
+    
+    public File convert_sonar_v3_to_sonar_v4(String input) throws IOException {
+        String xsl = "sonar_v3_to_sonar_v4.xsl";
         return convertAndGetOutputFile(input, xsl);
     }
 

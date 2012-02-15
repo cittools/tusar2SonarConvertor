@@ -4,8 +4,14 @@ import org.custommonkey.xmlunit.Diff;
 import org.custommonkey.xmlunit.XMLUnit;
 import org.junit.Assert;
 import org.junit.Before;
+import org.xml.sax.InputSource;
+
+import com.thalesgroup.dtkit.util.converter.ConversionService;
+import com.thalesgroup.dtkit.util.converter.ConversionServiceFactory;
 
 import java.io.*;
+
+import javax.xml.transform.stream.StreamSource;
 
 public class AbstractTest {
 
@@ -67,5 +73,25 @@ public class AbstractTest {
         Assert.assertTrue("XSL transformation did not work" + myDiff, myDiff.similar());
     }
 
-
+    public void convert2SonarV3(String inputXMLPath, String expectedResultPath) throws Exception {
+    	Convertor convertor = Convertor.getInstance();
+    	
+    	File out = convertor.convert2SonarV3(new File(this.getClass().getResource(inputXMLPath).toURI()));
+    	
+    	Diff myDiff = new Diff(readXmlAsString(new File(this.getClass().getResource(expectedResultPath).toURI())), readXmlAsString(out));
+        Assert.assertTrue("XSL transformation did not work" + myDiff, myDiff.similar());
+    	
+    	
+    }
+    
+    public void convert2SonarV4(String inputXMLPath, String expectedResultPath) throws Exception {
+    	Convertor convertor = Convertor.getInstance();
+    	
+    	File out = convertor.convert2SonarV4(new File(this.getClass().getResource(inputXMLPath).toURI()));
+    	Diff myDiff = new Diff(readXmlAsString(new File(this.getClass().getResource(expectedResultPath).toURI())), readXmlAsString(out));
+        Assert.assertTrue("XSL transformation did not work" + myDiff, myDiff.similar());
+    	
+    	
+    }
+    
 }
