@@ -6,7 +6,7 @@
     <groupId>com.thalesgroup.tusar.lib</groupId>
     <artifactId>tusar2SonarConverter</artifactId>
     <packaging>jar</packaging>
-    <version>0.4</version>
+    <version>0.5-SNAPSHOT</version>
     <name>tusar2SonarConverter</name>
 
     <licenses>
