@@ -50,7 +50,7 @@ public class Convertor {
 
     public File convert(File inputFile) throws IOException {
 
-        return convert2SonarV4(inputFile);
+        return convert2SonarV5(inputFile);
     }
 
 
@@ -92,12 +92,25 @@ public class Convertor {
     public File convert2SonarV4(File inputFile) throws IOException {
     	if (isTusarForVersion(inputFile, 10)){
     		String out = conversionService.convertAndReturn(new StreamSource(this.getClass().getResourceAsStream("remove-namespace.xsl")), inputFile, null);
-            return convertAndGetOutputFile(out, "tusar-v10-2Sonarv4.xsl");
+           File f=convertAndGetOutputFile(out, "tusar-v10-2Sonarv4.xsl");
+    		return f;
     	}
     	else {
     		File sonarV3 = convert2SonarV3(inputFile);
     		String out = conversionService.convertAndReturn(new StreamSource(this.getClass().getResourceAsStream("remove-namespace.xsl")), sonarV3, null);
     		return convertAndGetOutputFile(out, "sonar_v3_to_sonar_v4.xsl");
+    	}
+    }
+    public File convert2SonarV5(File inputFile) throws IOException {
+    	if (isTusarForVersion(inputFile, 11)){
+    		String out = conversionService.convertAndReturn(new StreamSource(this.getClass().getResourceAsStream("remove-namespace.xsl")), inputFile, null);
+            return convertAndGetOutputFile(out, "tusar-v11-2Sonarv5.xsl");
+    	}
+    	else {
+    		File sonarV4 = convert2SonarV4(inputFile);
+    		String out = conversionService.convertAndReturn(new StreamSource(this.getClass().getResourceAsStream("remove-namespace.xsl")), sonarV4, null);
+    		File f=convertAndGetOutputFile(out, "sonar_v4_to_sonar_v5.xsl");
+    		return f;
     	}
     }
 
@@ -155,6 +168,15 @@ public class Convertor {
         ByteArrayInputStream inputBytes = new ByteArrayInputStream(input.getBytes());
         return conversionService.convertAndReturn(new StreamSource(this.getClass().getResourceAsStream(xsl)), new InputSource(inputBytes), null);
 
+    }
+    public static void main(String[] args){
+    	Convertor conv=Convertor.getInstance();
+    	File inputFile=new File("C:\\Users\\GENIATIS\\.jenkins\\jobs\\helloPurecoverage\\workspace\\generatedDTKITFiles\\COVERAGE\\TUSAR-1729505560.xml");
+    	try{
+    		conv.convert2SonarV5(inputFile);
+    	}catch(Exception e){
+    		e.printStackTrace();
+    	}
     }
 
 }
