@@ -1,182 +1,349 @@
 package com.thalesgroup.tusar.lib.convertor;
 
-import com.thalesgroup.dtkit.util.converter.ConversionService;
-import com.thalesgroup.dtkit.util.converter.ConversionServiceFactory;
-import org.xml.sax.InputSource;
+import java.io.IOException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
-import javax.xml.transform.stream.StreamSource;
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import javax.xml.bind.Unmarshaller;
+import javax.xml.validation.Schema;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.xml.sax.SAXException;
+
+import org.jenkinsci.lib.dtkit.util.converter.ConversionException;
+import org.jenkinsci.lib.dtkit.util.converter.ConversionServiceFactory;
 
 public class Convertor {
 
-    private static Convertor instance;
+	public static final int FIRST_SUPPORTED_VERSION = 1;
 
-    private ConversionService conversionService;
+	public static final int LAST_SUPPORTED_VERSION = 12;
 
-    private Convertor() {
-        this.conversionService = ConversionServiceFactory.getInstance();
-    }
+	private static final String TUSAR_VERSION_ATTRIBUTE = "version";
 
-    public static synchronized Convertor getInstance() {
-        if (instance == null) {
-            instance = new Convertor();
-        }
-        return instance;
-    }
+	private static final String NAMESPACE_URL_PREFIX = "http://www.thalesgroup.com/tusar";
 
-    private boolean isTusarForVersion(File file, int version) {
-        try {
-            if (version != 1) {
-                JAXBContext jc = JAXBContext.newInstance("com.thalesgroup.tusar.v" + version);
-                jc.createUnmarshaller().unmarshal(file);
-            } else {
-                JAXBContext jc = JAXBContext.newInstance("com.thalesgroup.dtkit.tusar.model");
-                jc.createUnmarshaller().unmarshal(file);
-            }
-            return true;
-        } catch (JAXBException je) {
-            return false;
-        }
-    }
+	/**
+	 * The TUSAR namespace value format, allowing us to know its version.
+	 */
+	public static final Pattern TUSAR_NAMESPACE_FORMAT = Pattern.compile(Pattern.quote(NAMESPACE_URL_PREFIX)
+	        + "/v(\\d+)");
 
-    private String removeNamespace(File inputFile) {
-        return conversionService.convertAndReturn(new StreamSource(this.getClass().getResourceAsStream("remove-namespace.xsl")), inputFile, null);
-    }
+	private static Logger logger = LoggerFactory.getLogger(Convertor.class);
 
-    public File convert(File inputFile) throws IOException {
+	/**
+	 * A XSLT conversion to a given version.
+	 */
+	private class UpgradeStep {
 
-        return convert2SonarV5(inputFile);
-    }
+		private final int toVersion;
 
+		private final Transformer transformer;
 
-    public File convert2SonarV1(File inputFile) throws IOException {
-        File file = File.createTempFile("convertFile", "sonar");
-        FileOutputStream fos = new FileOutputStream(file);
-        fos.write(convert2SonarV1AndGetContent(inputFile).getBytes());
-        return file;
-    }
-    
-    public File convert2SonarV2(File inputFile) throws IOException {
-        // Remove Namespace if needed
-        String out = conversionService.convertAndReturn(new StreamSource(this.getClass().getResourceAsStream("remove-namespace.xsl")), inputFile, null);
-        return convertAndGetOutputFile(out, "tusar-v7-v8-2Sonarv2.xsl");
-    }
-    
-    public File convert2SonarV3(File inputFile) throws IOException {
-    	if (isTusarForVersion(inputFile, 6)
-                || isTusarForVersion(inputFile, 5)
-                || isTusarForVersion(inputFile, 4)
-                || isTusarForVersion(inputFile, 3)
-                || isTusarForVersion(inputFile, 2)
-                || isTusarForVersion(inputFile, 1)
-                ) {
-            String sonarV1 = convert2SonarV1AndGetContent(inputFile);
-            String sonarV2 = convertAndGetOutput(sonarV1, "sonar_v1_to_sonar_v2.xsl");
-            return convert_sonar_v2_to_sonar_v3(sonarV2);
-        } else if (isTusarForVersion(inputFile, 7)
-                || isTusarForVersion(inputFile, 8)
-                || isTusarForVersion(inputFile, 9)
-                ){
-            //return convert2SonarV2(inputFile);
-        	String sonarV2 = convert2SonarV2AndGetContent(inputFile);
-            return convert_sonar_v2_to_sonar_v3(sonarV2);
-        }
-    	return null;
-    }
-    
-    public File convert2SonarV4(File inputFile) throws IOException {
-    	if (isTusarForVersion(inputFile, 10)){
-    		String out = conversionService.convertAndReturn(new StreamSource(this.getClass().getResourceAsStream("remove-namespace.xsl")), inputFile, null);
-           File f=convertAndGetOutputFile(out, "tusar-v10-2Sonarv4.xsl");
-    		return f;
-    	}
-    	else {
-    		File sonarV3 = convert2SonarV3(inputFile);
-    		String out = conversionService.convertAndReturn(new StreamSource(this.getClass().getResourceAsStream("remove-namespace.xsl")), sonarV3, null);
-    		return convertAndGetOutputFile(out, "sonar_v3_to_sonar_v4.xsl");
-    	}
-    }
-    public File convert2SonarV5(File inputFile) throws IOException {
-    	if (isTusarForVersion(inputFile, 11)){
-    		String out = conversionService.convertAndReturn(new StreamSource(this.getClass().getResourceAsStream("remove-namespace.xsl")), inputFile, null);
-            return convertAndGetOutputFile(out, "tusar-v11-2Sonarv5.xsl");
-    	}
-    	else {
-    		File sonarV4 = convert2SonarV4(inputFile);
-    		String out = conversionService.convertAndReturn(new StreamSource(this.getClass().getResourceAsStream("remove-namespace.xsl")), sonarV4, null);
-    		File f=convertAndGetOutputFile(out, "sonar_v4_to_sonar_v5.xsl");
-    		return f;
-    	}
-    }
+		public UpgradeStep(int toVersion, Transformer transformer) {
+			this.toVersion = toVersion;
+			this.transformer = transformer;
+		}
 
-    private String convert2SonarV1AndGetContent(File inputFile) throws IOException {
+		public Document apply(Document input) throws ConversionException {
+			logger.debug("Applying XSLT '{}'", transformer);
+			Document output = transformer.apply(removeNamespace.apply(input));
+			output.getDocumentElement().setAttribute(TUSAR_VERSION_ATTRIBUTE, Integer.toString(toVersion));
+			return output;
+		}
+	}
 
-        // Remove Namespace if needed
-        String out = conversionService.convertAndReturn(new StreamSource(this.getClass().getResourceAsStream("remove-namespace.xsl")), inputFile, null);
+	private static Convertor instance;
 
-        //Tusar version v4,v5,v6
-        if (isTusarForVersion(inputFile, 4)
-                || isTusarForVersion(inputFile, 5)
-                || isTusarForVersion(inputFile, 6)) {
-            return convertAndGetOutput(out, "tusar-v4-v5-v6-2Sonarv1.xsl");
-        }
+	public static synchronized Convertor getInstance() {
+		if (instance == null) {
+			instance = new Convertor();
+		}
+		return instance;
+	}
 
-        //Tusar v1,v2,v3
-        else if (isTusarForVersion(inputFile, 1)
-                || isTusarForVersion(inputFile, 2)
-                || isTusarForVersion(inputFile, 3)) {
-            return convertAndGetOutput(out, "tusar-v1-v2-v3-2Sonarv1.xsl");
-        }
+	/*
+	 * For test purpose. Since XSLT parsing and compilation are cached, using
+	 * the singleton instance is not the same thing as constructing a new
+	 * Convertor for each conversion (see Transformer.Context inner class.)
+	 */
+	Convertor() {
+	}
 
-        throw new IllegalArgumentException("There is no convert to Sonar v1 for the input file " + inputFile.getAbsolutePath());
-    }
-    
-    private String convert2SonarV2AndGetContent(File inputFile) throws IOException {
-    	// Remove Namespace if needed
-        String out = conversionService.convertAndReturn(new StreamSource(this.getClass().getResourceAsStream("remove-namespace.xsl")), inputFile, null);
-        return convertAndGetOutput(out, "tusar-v7-v8-2Sonarv2.xsl");
-    }
+	private static class SchemaInfo {
 
-    public File convert_sonar_v1_to_sonar_v2(String input) throws IOException {
-        String xsl = "sonar_v1_to_sonar_v2.xsl";
-        return convertAndGetOutputFile(input, xsl);
-    }
-    
-    public File convert_sonar_v2_to_sonar_v3(String input) throws IOException {
-        String xsl = "sonar_v2_to_sonar_v3.xsl";
-        return convertAndGetOutputFile(input, xsl);
-    }
-    
-    public File convert_sonar_v3_to_sonar_v4(String input) throws IOException {
-        String xsl = "sonar_v3_to_sonar_v4.xsl";
-        return convertAndGetOutputFile(input, xsl);
-    }
+		public final Schema schema;
+		public final NamespaceSet namespaceSet;
 
-    private File convertAndGetOutputFile(String input, String xsl) throws IOException {
-        File out = File.createTempFile("convertFile", "sonar");
-        ByteArrayInputStream inputBytes = new ByteArrayInputStream(input.getBytes());
-        conversionService.convert(new StreamSource(this.getClass().getResourceAsStream(xsl)), new InputSource(inputBytes), out, null);
-        return out;
-    }
+		public SchemaInfo(Schema schema, NamespaceSet namespaceSet) {
+			this.schema = schema;
+			this.namespaceSet = namespaceSet;
+		}
+	}
 
-    private String convertAndGetOutput(String input, String xsl) throws IOException {
-        ByteArrayInputStream inputBytes = new ByteArrayInputStream(input.getBytes());
-        return conversionService.convertAndReturn(new StreamSource(this.getClass().getResourceAsStream(xsl)), new InputSource(inputBytes), null);
+	private final Map<Integer, SchemaInfo> schemaInfos = new HashMap<Integer, SchemaInfo>();
+	{
+		for (int version = FIRST_SUPPORTED_VERSION; version <= LAST_SUPPORTED_VERSION; ++version) {
+			String xsdPath = "/com/thalesgroup/dtkit/tusar/model/xsd/tusar-" + version + ".xsd";
+			try {
+				URL xsdUrl = getClass().getResource(xsdPath);
+				if (xsdUrl != null) {
+					Schema schema = XmlHelper.readSchema(xsdUrl);
+					NamespaceSet namespaceSet = new NamespaceSet(xsdPath, NAMESPACE_URL_PREFIX);
+					schemaInfos.put(version, new SchemaInfo(schema, namespaceSet));
+				} else {
+					throw new ConversionException("Schema not found: " + xsdPath);
+				}
+			} catch (SAXException e) {
+				throw new ConversionException("Cannot read schema: " + xsdPath);
+			}
+		}
+	}
 
-    }
-    public static void main(String[] args){
-    	Convertor conv=Convertor.getInstance();
-    	File inputFile=new File("C:\\Users\\GENIATIS\\.jenkins\\jobs\\helloPurecoverage\\workspace\\generatedDTKITFiles\\COVERAGE\\TUSAR-1729505560.xml");
-    	try{
-    		conv.convert2SonarV5(inputFile);
-    	}catch(Exception e){
-    		e.printStackTrace();
-    	}
-    }
+	private final Transformer identity = new Transformer("id.xsl");
 
+	private final Transformer removeNamespace = new Transformer("remove-namespace.xsl");
+
+	/**
+	 * For each known version, we search for a conversion to a higher version
+	 * with he minimu gap (that is, from N to M with M-N minimal). In practise,
+	 * only one such conversion shall exist. If none are found, we choose a N to
+	 * N+1 identity conversion.
+	 */
+	private final Map<Integer, UpgradeStep> steps = new HashMap<Integer, UpgradeStep>();
+	{
+		for (int version = FIRST_SUPPORTED_VERSION; version < LAST_SUPPORTED_VERSION; ++version) {
+			Transformer transform = null;
+			for (int toVersion = version + 1; toVersion <= LAST_SUPPORTED_VERSION; ++toVersion) {
+				String xsl = String.format("v%d_to_v%d.xsl", version, toVersion);
+				URL xslUrl = getClass().getResource(xsl);
+				if (xslUrl != null) {
+					transform = new Transformer(xslUrl, xsl);
+					steps.put(version, new UpgradeStep(toVersion, transform));
+					break;
+				}
+			}
+			if (transform == null) {
+				steps.put(version, new UpgradeStep(version + 1, identity));
+			}
+		}
+	}
+
+	public com.thalesgroup.tusar.v12.Tusar upgradeToLastVersionModel(URL tusarUrl) throws ConversionException {
+		int lastVersion = 12; // Informally equal to LAST_SUPPORTED_VERSION.
+		Document tusarDocument = upgrade(tusarUrl, lastVersion);
+		return (com.thalesgroup.tusar.v12.Tusar) toModel(tusarDocument, lastVersion);
+	}
+
+	public Document upgradeToLastVersion(URL tusarUrl) throws ConversionException {
+		return upgrade(tusarUrl, LAST_SUPPORTED_VERSION);
+	}
+
+	public Document upgrade(URL tusarUrl, int toVersion) throws ConversionException {
+		Document document;
+		try {
+			logger.debug("Parsing TUSAR file '{}'", tusarUrl);
+			document = XmlHelper.readXml(tusarUrl);
+		} catch (Exception e) {
+			throw new ConversionException("Can't parse TUSAR input file " + tusarUrl, e);
+		}
+		Integer version = findTusarVersion(document);
+		if (version != null) {
+			return upgrade(document, version, toVersion);
+		} else {
+			throw new ConversionException("Failed to identify version for TUSAR file " + tusarUrl);
+		}
+	}
+
+	private Document upgrade(Document document, int version, int toVersion) throws ConversionException {
+		while (true) {
+			document = removeNamespace.apply(document);
+			/*
+			 * Namespaces are mandatory for a proper validation, but also
+			 * annoying when writing the XSL and, anyway, almost never provided
+			 * by the user. That's why we remove them before transforming the
+			 * document and add them back here. We known that namespaces to use
+			 * by parsing the relevant schemae for each version (have a look at
+			 * the NamespaceSet class). Setting the right namespace for each
+			 * element is easy since the prefixes used for namespace match the
+			 * element name (if an element has no matching namespace, it uses
+			 * its parent's). This is an informal rule which happens to be
+			 * followed by all TUSAR schemae starting with version 2. Just
+			 * continu following it and everything will be fine.
+			 */
+			if (version > 1) {
+				XmlHelper.autoQualify(document, schemaInfos.get(version).namespaceSet.getNamespaces());
+			}
+			validate(document, version);
+			if (version < toVersion) {
+				UpgradeStep step = steps.get(version);
+				if (step != null) {
+					document = step.apply(document);
+					version = step.toVersion;
+					if (logger.isTraceEnabled()) {
+						logger.trace("Output document:\n{}", XmlHelper.dumpXml(document));
+					}
+				} else {
+					throw new ConversionException("No TUSAR conversion found for TUSAR version " + version);
+				}
+			} else {
+				return document;
+			}
+		}
+	}
+
+	private void validate(Document tusarDocument, int version) {
+		try {
+			XmlHelper.validate(schemaInfos.get(version).schema, tusarDocument);
+			logger.debug("The document is a valid TUSAR v{} document", version);
+		} catch (SAXException e) {
+			logger.error("Output document:\n{}", XmlHelper.dumpXml(tusarDocument));
+			throw new ConversionException("The produced output cannot be validated against TUSAR schema v" + version, e);
+		} catch (IOException e) {
+			throw new ConversionException("When validating transformed output with TUSAR schema v" + version, e);
+		}
+	}
+
+	Integer findTusarVersion(Document tusarDocument) {
+		String expectedRootName = "tusar";
+		Element rootElement = tusarDocument.getDocumentElement();
+		String rootName = rootElement.getLocalName();
+		if (expectedRootName.equalsIgnoreCase(rootName)) {
+
+			Integer namespaceVersion = getNamespaceVersion(rootElement);
+			Integer explicitVersion = getExplicitVersion(rootElement);
+
+			Integer version = null;
+			/*
+			 * Namespace is regarded as the most reliable way to know the
+			 * version, in particular since the version attribute became
+			 * optional between version 1 and 2.
+			 */
+			if (namespaceVersion != null) {
+				if (explicitVersion == null || explicitVersion.equals(namespaceVersion)) {
+					version = namespaceVersion;
+				} else {
+					throw new ConversionException("TUSAR explicit version is " + expectedRootName
+					        + ", but namespace version used is " + namespaceVersion);
+				}
+			}
+			/*
+			 * If no namespace is defined, we go for the version number.
+			 */
+			else if (explicitVersion != null) {
+				version = explicitVersion;
+			}
+
+			/*
+			 * Failing that, we are left with a brutal duck typing comparison.
+			 */
+			if (version == null) {
+				logger.warn("Unidentified TUSAR version (no TUSAR namespace provided neither explicit version)");
+				version = guessTusarVersion(tusarDocument);
+			}
+
+			return version;
+		} else {
+			throw new ConversionException("Expected root name of a TUSAR report is " + expectedRootName + ", but "
+			        + rootElement + " found.");
+		}
+	}
+
+	private Integer getExplicitVersion(Element tusar) {
+		String versionAttributeValue = tusar.getAttribute(TUSAR_VERSION_ATTRIBUTE);
+		if (versionAttributeValue != null && !versionAttributeValue.isEmpty()) {
+			try {
+				int version = Integer.parseInt(versionAttributeValue);
+				logger.debug("Explicitly identified TUSAR version is {}", version);
+				return version;
+			} catch (NumberFormatException e) {
+				logger.warn("Version attribute found but with a invalid value: "+ versionAttributeValue);
+			}
+		}
+		return null;
+	}
+
+	private Integer getNamespaceVersion(Element tusar) {
+		String namespaceUri = tusar.getNamespaceURI();
+		if (namespaceUri != null) {
+			Matcher matcher = TUSAR_NAMESPACE_FORMAT.matcher(namespaceUri);
+			if (matcher.matches()) {
+				String value = matcher.group(1);
+				try {
+					int version = Integer.parseInt(value);
+					logger.debug("Namespace identified TUSAR version is {}", version);
+					return version;
+				} catch (NumberFormatException e) {
+					throw new ConversionException("Can't happen since " + value + " shall be a number thanks to regex "
+					        + TUSAR_NAMESPACE_FORMAT);
+				}
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * Return the first TUSAR version whose corresponding JAXB mapping can load
+	 * the provided TUSAR document.
+	 */
+	private Integer guessTusarVersion(Document tusarDocument) {
+		List<Integer> sortedTusarVersions = new ArrayList<Integer>(steps.keySet());
+		Collections.sort(sortedTusarVersions);
+		Collections.reverse(sortedTusarVersions);
+		for (int version : sortedTusarVersions) {
+			try {
+				tusarDocument = removeNamespace.apply(tusarDocument);
+				if (version > 1) {
+					XmlHelper.autoQualify(tusarDocument, schemaInfos.get(version).namespaceSet.getNamespaces());
+				}
+				toModel(tusarDocument, version);
+				logger.debug("Guessed TUSAR version is {}", version);
+				return version;
+			} catch (ConversionException e) {
+				continue;
+			}
+		}
+		return null;
+	}
+
+	Object toModel(Document tusarDocument, int version) throws ConversionException {
+		try {
+			JAXBContext jc = getTusarJaxbContext(version);
+			Unmarshaller unmarshaller = jc.createUnmarshaller();
+			Thread.currentThread().setContextClassLoader(ConversionServiceFactory.class.getClassLoader());
+			return unmarshaller.unmarshal(tusarDocument);
+		} catch (JAXBException e) {
+			throw new ConversionException("Can not parse TUSAR report: ", e);
+		}
+	}
+
+	private JAXBContext getTusarJaxbContext(int version) throws JAXBException {
+		String contextPath;
+		if (version != 1) {
+			/*
+			 * Every version of TUSAR schema but the first use namespace and
+			 * have their JAXB classes generated in the corresponding package.
+			 * For the first version, the package is explictly provided in the
+			 * POM and, unfortunately, doesn't quite match the same naming
+			 * scheme as with the others.
+			 */
+			contextPath = "com.thalesgroup.tusar.v" + version;
+		} else {
+			contextPath = "com.thalesgroup.dtkit.tusar.model";
+		}
+		// Any class from the library would do the job.
+		ClassLoader classLoader = com.thalesgroup.dtkit.tusar.model.ObjectFactory.class.getClassLoader();
+		return JAXBContext.newInstance(contextPath, classLoader);
+	}
 }
