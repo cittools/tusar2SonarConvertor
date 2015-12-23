@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<tusar:tusar xmlns:tusar="http://www.thalesgroup.com/tusar/v10"
+	xmlns:violations="http://www.thalesgroup.com/tusar/violations/v4">
+	<tusar:violations toolname="Machin" version="unknown">
+		<violations:file path="a/b/c/Alpha.java">
+			<violations:violation column="48" key="BIDULE_001"
+				line="33" message="You're doing it wrong!" severity="CRITICAL" />
+			<violations:violation column="10" key="BIDULE_001"
+				line="21" message="You're doing it wrong!" severity="MAJOR" />
+		</violations:file>
+		<violations:file path="a/b/c/Beta.java">
+			<violations:violation column="12" key="BIDULE_001"
+				line="313" message="You're doing it wrong!" severity="CRITICAL" />
+			<violations:violation column="40" key="BIDULE_001"
+				line="277" message="You're doing it wrong!" severity="MAJOR" />
+		</violations:file>
+	</tusar:violations>
+</tusar:tusar>

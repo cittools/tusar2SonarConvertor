@@ -1,0 +1,48 @@
+TUSAR v1
+--------
+- Initial version (note that it is the only whose schema does not use namespace).
+
+TUSAR v2
+--------
+- First split of the root schema into tests, measures, coverage and violations schemae [nothing to do].
+- Value domain changed for attribute key of measure element.
+
+TUSAR v3
+--------
+- Optional 'version' and 'toolname' attributes added to tests, measures, coverage and violations [nothing to do].
+
+TUSAR v4
+--------
+- Enumerated value constraint on 'measures/resource/measure@key' has been removed [nothing to do].
+
+TUSAR v5
+--------
+- The min occurence of 'violations/file' has been set to 0 (default is 1) [nothing to do].
+
+TUSAR v6
+--------
+- Absolutely no change at all.
+
+TUSAR v7
+--------
+- Specialize 'measure' into size measures and add duplications, design and documentation.
+
+TUSAR v8
+--------
+- Reintroduce the optional 'toolname' attribute at 'measures' level [nothing to do].
+
+TUSAR v9
+---------
+- Add of 'skipped' elements in 'tests/testsuite' [nothing to do].
+
+TUSAR v10
+---------
+- Specialize 'coverage' into line coverage and add branch coverage.
+
+TUSAR v11
+---------
+- Add a function type with filename attribute to measure and also add a memory measure [nothing to do].
+
+TUSAR v12
+---------
+- Replace branch-coverage by 4 elements sharing the new same type generic-branc-coverage.

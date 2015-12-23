@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tusar xmlns="http://www.thalesgroup.com/tusar/v11"
+	xmlns:violations="http://www.thalesgroup.com/tusar/violations/v4"
+	xmlns:duplications="http://www.thalesgroup.com/tusar/duplications/v1"
+	xmlns:tests="http://www.thalesgroup.com/tusar/tests/v5"
+	xmlns:branch-coverage="http://www.thalesgroup.com/tusar/branch-coverage/v1"
+	xmlns:line-coverage="http://www.thalesgroup.com/tusar/line-coverage/v1"
+	xmlns:coverage="http://www.thalesgroup.com/tusar/coverage/v4"
+	xmlns:documentation="http://www.thalesgroup.com/tusar/documentation/v1"
+	xmlns:measures="http://www.thalesgroup.com/tusar/measures/v7"
+	xmlns:memory="http://www.thalesgroup.com/tusar/memory/v1" xmlns:design="http://www.thalesgroup.com/tusar/design/v1"
+	xmlns:size="http://www.thalesgroup.com/tusar/size/v2" version="11">
+	<tests>
+		<testsuite xmlns="http://www.thalesgroup.com/tusar/tests/v5"
+			errors="3" failures="2" name="alpha" skipped="1" tests="10" time="2h30"
+			timestamp="201408250815">
+			<properties>
+				<property name="x" value="1" />
+				<property name="y" value="2" />
+			</properties>
+			<testcase assertions="What?" filepath="alpha\beta\test-file-1.cpp"
+				fulltestname="Test number 1" testname="test-1" time="1:10"
+				timestamp="201408250820" />
+			<testcase testname="test-2" />
+		</testsuite>
+		<testsuite xmlns="http://www.thalesgroup.com/tusar/tests/v5"
+			name="beta" tests="5">
+		</testsuite>
+	</tests>
+	<coverage>
+		<line-coverage xmlns="http://www.thalesgroup.com/tusar/coverage/v4">
+			<file xmlns="http://www.thalesgroup.com/tusar/line-coverage/v1"
+				coverage="What?" path="alpha\beta\file-1.cpp">
+				<line hits="2" number="120" type="stmt" />
+				<line hits="3" number="240" />
+			</file>
+			<file xmlns="http://www.thalesgroup.com/tusar/line-coverage/v1"
+				path="lpha\beta\file-2.cpp">
+				<line hits="0" number="100" type="block" />
+			</file>
+		</line-coverage>
+	</coverage>
+	<violations>
+		<file xmlns="http://www.thalesgroup.com/tusar/violations/v4"
+			path="alpha\beta\file-1.cpp">
+			<violation column="33" key="1408" line="300" message="C'est mal !"
+				severity="Drôlement grave" />
+			<violation key="10" line="14" message="WTF?" />
+		</file>
+		<file xmlns="http://www.thalesgroup.com/tusar/violations/v4"
+			path="alpha\beta\file-2.cpp">
+			<!-- In TUSAR v1, at least one violation must be provided. -->
+			<violation column="33" key="1408" line="300" message="C'est mal !"
+				severity="Drôlement grave" />
+			<violation key="10" line="14" message="WTF?" />
+		</file>
+	</violations>
+	<measures>
+		<size xmlns="http://www.thalesgroup.com/tusar/measures/v7">
+			<resource xmlns="http://www.thalesgroup.com/tusar/size/v2"
+				type="PROJECT" value="alpha">
+				<measure key="LI" value="300" />
+				<measure key="NCLOC" value="240" />
+			</resource>
+			<resource xmlns="http://www.thalesgroup.com/tusar/size/v2"
+				type="DIRECTORY" value="alpha\beta">
+				<measure key="LI" value="300" />
+				<measure key="NCLOC" value="240" />
+			</resource>
+			<resource xmlns="http://www.thalesgroup.com/tusar/size/v2"
+				type="FILE" value="alpha\beta\file-1.cpp">
+				<measure key="LI" value="100" />
+				<measure key="NCLOC" value="80" />
+			</resource>
+			<resource xmlns="http://www.thalesgroup.com/tusar/size/v2"
+				type="FILE" value="alpha\beta\file-2.cpp">
+				<measure key="LI" value="200" />
+				<measure key="NCLOC" value="160" />
+			</resource>
+		</size>
+	</measures>
+</tusar>

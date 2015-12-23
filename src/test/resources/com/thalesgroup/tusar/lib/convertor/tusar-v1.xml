@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tusar xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://www.thalesgroup.com/tusar/v1" version="1">
+	<tests>
+		<testsuite name="alpha" tests="10" failures="2" errors="3"
+			skipped="1" time="2h30" timestamp="201408250815">
+			<properties>
+				<property name="x" value="1" />
+				<property name="y" value="2" />
+			</properties>
+			<testcase testname="test-1" filepath="alpha\beta\test-file-1.cpp"
+				fulltestname="Test number 1" assertions="What?" time="1:10"
+				timestamp="201408250820" />
+			<testcase testname="test-2" />
+		</testsuite>
+		<testsuite name="beta" tests="5">
+		</testsuite>
+	</tests>
+	<coverage>
+		<file coverage="What?" path="alpha\beta\file-1.cpp">
+			<line number="120" hits="2" type="stmt" />
+			<line number="240" hits="3" />
+		</file>
+		<file path="lpha\beta\file-2.cpp">
+			<line number="100" hits="0" type="block" />
+		</file>
+	</coverage>
+	<violations>
+		<file path="alpha\beta\file-1.cpp">
+			<violation line="300" message="C'est mal !" key="1408"
+				column="33" severity="Drôlement grave" />
+			<violation line="14" message="WTF?" key="10" />
+		</file>
+		<file path="alpha\beta\file-2.cpp">
+			<!-- In TUSAR v1, at least one violation must be provided. -->
+			<violation line="300" message="C'est mal !" key="1408"
+				column="33" severity="Drôlement grave" />
+			<violation line="14" message="WTF?" key="10" />
+		</file>
+	</violations>
+	<measures>
+		<!-- In TUSAR v1, key type is a enumeration. -->
+		<resource type="PROJECT" value="alpha">
+			<measure key="LI" value="300" />
+			<measure key="NCLOC" value="240" />
+		</resource>
+		<resource type="DIRECTORY" value="alpha\beta">
+			<measure key="LI" value="300" />
+			<measure key="NCLOC" value="240" />
+		</resource>
+		<resource type="FILE" value="alpha\beta\file-1.cpp">
+			<measure key="LI" value="100" />
+			<measure key="NCLOC" value="80" />
+		</resource>
+		<resource type="FILE" value="alpha\beta\file-2.cpp">
+			<measure key="LI" value="200" />
+			<measure key="NCLOC" value="160" />
+		</resource>
+	</measures>
+</tusar>
